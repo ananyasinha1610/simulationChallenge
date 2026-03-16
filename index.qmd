@@ -1,6 +1,7 @@
 ---
 title: "Simulation Challenge"
 subtitle: "Starter Template with To-Dos"
+jupyter: python3
 format:
   html: default
 execute:
@@ -19,6 +20,33 @@ execute:
 - [ ] Render to HTML (`quarto render` or Render button)
 - [ ] Push HTML to your repo and enable GitHub Pages
 - [ ] Share your site: `https://[your-username].github.io/simulationChallenge/`
+::::
+
+:::: {.callout-note}
+## 🐍 Python Environment Setup
+
+Before rendering, create a fresh virtual environment and install the required packages:
+
+1. Press `Ctrl+Shift+P` to open the Command Palette
+2. Type **"Python: Select Interpreter"** and select it
+3. Click **"+ Create Virtual Environment..."**
+4. Choose **Venv**
+5. Select your Python installation (e.g., Python 3.12)
+6. Wait for the environment to be created and activated
+
+Then open a terminal and install dependencies:
+
+**Windows:**
+```bash
+py -m pip install jupyter matplotlib pandas daft-pgm
+```
+
+**Mac:**
+```bash
+python3 -m pip install jupyter matplotlib pandas daft-pgm
+```
+
+This ensures you have everything needed for Quarto rendering and the DAG visualizations.
 ::::
 
 :::: {.callout-warning}
@@ -42,7 +70,7 @@ Your analysis should read as a **persuasive narrative** arguing for or against t
 
 - **Round figures** for readability (whole dollars for balances, 2-3 decimals for probabilities)
 - **Interpret results** in your own words outside of code chunks
-- Use Quarto inline code (e.g., `` `{python} round(ev, 0)` ``) or type values directly
+- Use Quarto inline code (e.g., `` `{{python}} round(ev, 0)` ``) or type values directly
 
 **Example:** Instead of printing `36000.0` from code, write:
 
