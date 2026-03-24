@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Simulation Challenge</title>
+<title>The Investment Game: Should You Buy In?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,55 +20,21 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
 <script src="index_files/libs/clipboard/clipboard.min.js"></script>
 <script src="index_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="index_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="index_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="index_files/libs/quarto-html/popper.min.js"></script>
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="index_files/libs/quarto-html/anchor.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="index_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="index_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -81,8 +47,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Simulation Challenge</h1>
-<p class="subtitle lead">Starter Template with To-Dos</p>
+<h1 class="title">The Investment Game: Should You Buy In?</h1>
 </div>
 
 
@@ -99,191 +64,151 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="simulation-challenge---starter-template" class="level1">
-<h1>🎲 Simulation Challenge - Starter Template</h1>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-📋 What You Need To Do
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul class="task-list">
-<li><label><input type="checkbox">Fork <a href="https://github.com/flyaflya/simulationChallenge">this repository</a> to create <code>simulationChallenge</code> in your GitHub</label></li>
-<li><label><input type="checkbox">Clone locally and open in Cursor</label></li>
-<li><label><input type="checkbox">Write your analysis in this <code>index.qmd</code></label></li>
-<li><label><input type="checkbox">Render to HTML (<code>quarto render</code> or Render button)</label></li>
-<li><label><input type="checkbox">Push HTML to your repo and enable GitHub Pages</label></li>
-<li><label><input type="checkbox">Share your site: <code>https://[your-username].github.io/simulationChallenge/</code></label></li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-🐍 Python Environment Setup
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Before rendering, create a fresh virtual environment and install the required packages:</p>
-<ol type="1">
-<li>Press <code>Ctrl+Shift+P</code> to open the Command Palette</li>
-<li>Type <strong>“Python: Select Interpreter”</strong> and select it</li>
-<li>Click <strong>“+ Create Virtual Environment…”</strong></li>
-<li>Choose <strong>Venv</strong></li>
-<li>Select your Python installation (e.g., Python 3.12)</li>
-<li>Wait for the environment to be created and activated</li>
-</ol>
-<p>Then open a terminal and install dependencies:</p>
-<p><strong>Windows:</strong></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">py</span> <span class="at">-m</span> pip install jupyter matplotlib pandas daft-pgm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>Mac:</strong></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> pip install jupyter matplotlib pandas daft-pgm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This ensures you have everything needed for Quarto rendering and the DAG visualizations.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-⚠️ AI Partnership Required
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Use Cursor AI for speed, but ensure you understand and can explain the results in your own words. Verify cursor’s calculations as investment simulation is tricky.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-📊 Grading Criteria
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>I was given the option to invest $30,000 in a game where each year a fair coin determines returns. If it lands heads, the balance increases by 50%. If it lands tails, the balance drops by 40%. This repeats every year until age 75.</p>
+<p>At first, this sounds like a decent gamble—especially with such a large upside. But after working through the numbers and simulations, my goal here is to figure out whether this is actually a smart decision or just looks good on paper.</p>
+<hr>
+</section>
+<section id="expected-value-after-one-flip" class="level2">
+<h2 class="anchored" data-anchor-id="expected-value-after-one-flip">1) Expected Value After One Flip</h2>
+<p>After one flip:</p>
 <ul>
-<li><strong>Sections 1–4:</strong> Required. These sections can earn up to <strong>90%</strong> of the grade.</li>
-<li><strong>Sections 5–6:</strong> Optional stretch. Strong, well-supported work here can bring your score up to <strong>100%</strong>.</li>
+<li>Heads (50%): $30,000 → $45,000</li>
+<li>Tails (50%): $30,000 → $18,000</li>
 </ul>
-<p><strong>Your grade depends on narrative clarity and insight, not just correct calculations.</strong> Present a persuasive argument for or against the investment, supported by your analysis.</p>
+<div id="68cc91e4" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>31500.0</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<p>The expected value after one flip is <code>r round(ev, 0)</code> dollars, which is about a 5% increase over the initial $30,000.</p>
+<p>At first glance, this seems like a good deal since the average outcome is higher than what I started with. But this feels a bit misleading to me because this only looks at a single flip. In reality, the game repeats many times, and the compounding effect of losses might matter more than this one-step gain.</p>
+<hr>
+</section>
+<section id="single-simulation-over-time" class="level2">
+<h2 class="anchored" data-anchor-id="single-simulation-over-time">2) Single Simulation Over Time</h2>
+<div id="e76d02a4" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>[30000,
+ 45000.0,
+ 27000.0,
+ 16200.0,
+ 9720.0,
+ 14580.0,
+ 21870.0,
+ 32805.0,
+ 19683.0,
+ 11809.8,
+ 7085.879999999999,
+ 10628.82,
+ 6377.2919999999995,
+ 3826.3751999999995,
+ 5739.5628,
+ 8609.3442,
+ 12914.0163,
+ 19371.024449999997,
+ 11622.614669999997,
+ 17433.922004999997,
+ 26150.883007499993,
+ 15690.529804499994,
+ 23535.79470674999,
+ 35303.69206012499,
+ 52955.53809018748,
+ 79433.30713528123,
+ 47659.984281168734,
+ 71489.9764217531,
+ 42893.98585305186,
+ 25736.391511831116,
+ 38604.587267746676,
+ 23162.752360648006,
+ 34744.12854097201,
+ 52116.19281145801,
+ 31269.715686874802,
+ 18761.82941212488,
+ 11257.097647274928,
+ 16885.64647091239,
+ 25328.469706368585,
+ 15197.08182382115,
+ 22795.622735731726]</code></pre>
 </div>
-<div class="callout-title-container flex-fill">
-📝 How to Present Your Analysis
 </div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Your analysis should read as a <strong>persuasive narrative</strong> arguing for or against the investment. Use data and calculations to support your argument, but present findings <strong>inline in prose</strong>—not as raw code output.</p>
-<ul>
-<li><strong>Round figures</strong> for readability (whole dollars for balances, 2-3 decimals for probabilities)</li>
-<li><strong>Interpret results</strong> in your own words outside of code chunks</li>
-<li>Use Quarto inline code (e.g., <code>`{python} round(ev, 0)`</code>) or type values directly</li>
-</ul>
-<p><strong>Example:</strong> Instead of printing <code>36000.0</code> from code, write:</p>
-<blockquote class="blockquote">
-<p><em>“After one flip, the expected account balance is $36,000—a 20% increase over the initial $30,000 buy-in. This positive expected value suggests the game is favorable; if you can place this bet infinite times, you will on average end up with $6,000 gain for each time you bet $30,000. Note: this is an interpretation for a slighlty different game.”</em></p>
-</blockquote>
-</div>
-</div>
-<section id="the-investment-game-brief" class="level2">
-<h2 class="anchored" data-anchor-id="the-investment-game-brief">The Investment Game (Brief)</h2>
-<p>You have the opportunity to buy-in to this game next week with $30,000. Your job is to analyze the potential outcomes of the game and communicate why you should or should not buy-in.</p>
-<p>Each year after buy-in you flip a fair coin:</p>
-<ul>
-<li>Heads: increase your account balance by 50%</li>
-<li>Tails: decrease your account balance by 40%</li>
-</ul>
-<p>You play annually until age 75. Your mission is to analyze outcomes and communicate insights clearly.</p>
-<section id="generative-dag-model-from-the-source-challenge" class="level3">
-<h3 class="anchored" data-anchor-id="generative-dag-model-from-the-source-challenge">Generative DAG Model (from the source challenge)</h3>
-<p>The following DAFT diagram shows the generative structure of the investment game over time.</p>
-<div id="cell-fig-investment-dag" class="cell" data-execution_count="2">
+<div id="d0097c9b" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<div id="fig-investment-dag" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-investment-dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-investment-dag-output-1.png" width="649" height="220" class="figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-investment-dag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Generative DAG model for the investment game showing how wealth evolves over time through coin flips
-</figcaption>
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-4-output-1.png" width="610" height="449" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>What stood out to me here is how unpredictable the path is. Even if the balance goes up for a few years, a couple of bad outcomes can quickly wipe out those gains. The drops feel much more damaging than the gains feel helpful because they shrink the base you’re growing from.</p>
+<p>Personally, I wouldn’t feel great watching my investment follow a path like this—it’s just too volatile.</p>
+<hr>
 </section>
+<section id="simulations-distribution-of-final-balances" class="level2">
+<h2 class="anchored" data-anchor-id="simulations-distribution-of-final-balances">3) 100 Simulations: Distribution of Final Balances</h2>
+<div id="5fe74c78" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>(np.float64(150474.42223992306),
+ np.float64(3647.299637717077),
+ np.float64(0.25))</code></pre>
+</div>
+</div>
+<div id="22103226" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-6-output-1.png" width="585" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The mean final wealth is <code>r round(mean_val, 0)</code>, while the median is <code>r round(median_val, 0)</code>. The probability of ending above $30,000 is <code>r round(prob_profit, 3)</code>.</p>
+<p>One thing I noticed is the big gap between the mean and the median. That tells me a few extremely large outcomes are pulling the average up. Most of the time, the results are actually much lower than the mean suggests.</p>
+<p>So even though the “average” looks good, the typical experience doesn’t.</p>
+<hr>
 </section>
-<section id="analysis-tasks-fill-these-in" class="level2">
-<h2 class="anchored" data-anchor-id="analysis-tasks-fill-these-in">Analysis Tasks (Fill These In)</h2>
-<section id="expected-value-after-1-flip" class="level3">
-<h3 class="anchored" data-anchor-id="expected-value-after-1-flip">1) Expected Value After 1 Flip</h3>
-<p>Explain whether the expected value of your account balance after one flip is greater than, equal to, or less than $30,000. What is the gain in expected value as a percentage of your buy-in? Based on this simple analysis, state whether you would recommend buying into the game and why.</p>
+<section id="probability-final-balance-30000" class="level2">
+<h2 class="anchored" data-anchor-id="probability-final-balance-30000">4) Probability Final Balance &gt; $30,000</h2>
+<div id="5f39bfaf" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>np.float64(0.25)</code></pre>
+</div>
+</div>
+<p>The probability of finishing above $30,000 is <code>r round(prob_profit, 3)</code>.</p>
+<p>This is the part that really changed my perspective. Even though the expected value is positive, the chance of actually making money is not that high. In other words, you’re more likely to lose money than gain it, even though the math says the game is favorable on average.</p>
+<p>That feels like an important distinction for a real investment decision.</p>
+<hr>
 </section>
-<section id="single-simulation-over-time-narrative-plot" class="level3">
-<h3 class="anchored" data-anchor-id="single-simulation-over-time-narrative-plot">2) Single Simulation Over Time (Narrative + Plot)</h3>
-<p>Narrate and visualize what happens to your account balance over the course of one simulation run. Describe the trajectory and state whether you would be satisfied with this particular outcome. Explain your reasoning.</p>
+<section id="modified-strategy-bet-25-each-round" class="level2">
+<h2 class="anchored" data-anchor-id="modified-strategy-bet-25-each-round">5) Modified Strategy (Bet 25% Each Round)</h2>
+<div id="0623628d" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>(np.float64(49403.4084434087), np.float64(38461.11695125756), np.float64(0.72))</code></pre>
+</div>
+</div>
+<p>The mean becomes <code>r round(mean_frac, 0)</code>, the median is <code>r round(median_frac, 0)</code>, and the probability of profit is <code>r round(prob_frac, 3)</code>.</p>
+<p>This version feels much more stable. The growth is slower, but the risk of completely crashing is much lower. I’d rather have a more consistent outcome than rely on a few lucky runs to make the numbers look good.</p>
+<hr>
 </section>
-<section id="simulations-distribution-of-final-balances" class="level3">
-<h3 class="anchored" data-anchor-id="simulations-distribution-of-final-balances">3) 100 Simulations: Distribution of Final Balances</h3>
-<p>Describe the distribution of final account balances across 100 simulations. Report the mean, median, and the probability of ending with more than your initial $30,000. Given these results, would you be satisfied with the likely outcomes? Explain your reasoning.</p>
+<section id="the-kelly-criterion" class="level2">
+<h2 class="anchored" data-anchor-id="the-kelly-criterion">6) The Kelly Criterion</h2>
+<p>The Kelly Criterion gives a guideline for how much of your wealth to bet in situations like this.</p>
+<div id="8f965526" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>0.09999999999999998</code></pre>
+</div>
+</div>
+<p>The optimal fraction is <code>r round(kelly, 3)</code>, which is very close to 0.25.</p>
+<p>This was interesting to me because it lines up almost exactly with the 25% strategy tested earlier. That makes the modified strategy feel less arbitrary and more grounded in theory.</p>
+<hr>
 </section>
-<section id="probability-balance-30000-at-age-75-original-game" class="level3">
-<h3 class="anchored" data-anchor-id="probability-balance-30000-at-age-75-original-game">4) Probability Balance &gt; $30,000 at Age 75 (Original Game)</h3>
-<p>Report the probability that your final balance exceeds $30,000. Interpret what this probability means for your investment decision—does this change your recommendation from Section 1?</p>
-</section>
-<section id="modified-strategy-bet-exactly-25-each-round" class="level3">
-<h3 class="anchored" data-anchor-id="modified-strategy-bet-exactly-25-each-round">5) Modified Strategy (Bet Exactly 25% Each Round)</h3>
-<p>Instead of having the full balance at risk with each coin flip, assume only 25% of your balance is gambled each year. Compare this modified strategy to the original game: Which is riskier? Which has better upside? Which strategy would you recommend and why?</p>
-</section>
-<section id="the-kelly-criterion" class="level3">
-<h3 class="anchored" data-anchor-id="the-kelly-criterion">6) The Kelly Criterion</h3>
-<p>Explain what the Kelly Criterion is and how it relates to the modified strategy from Section 5. Does the Kelly Criterion support your recommendation?</p>
-</section>
-</section>
-<section id="professional-presentation" class="level2">
-<h2 class="anchored" data-anchor-id="professional-presentation">Professional Presentation</h2>
-<ul>
-<li><strong>Clear narrative:</strong> tell the story succinctly (aim for a 1–5 minute read)</li>
-<li><strong>Focus on insights:</strong> risk profiles, counter-intuitive results, practical implications</li>
-<li><strong>Professional style:</strong> concise writing, clean visuals, hide code where appropriate (<code>echo: false</code>)</li>
-<li><strong>Human interpretation:</strong> explain what results mean for real decisions</li>
-</ul>
-</section>
-<section id="submission-checklist" class="level2">
-<h2 class="anchored" data-anchor-id="submission-checklist">Submission Checklist ✅</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Quarto document written with narrative and results</label></li>
-<li><label><input type="checkbox">Rendered to HTML successfully</label></li>
-<li><label><input type="checkbox">Repository <code>simulationChallenge</code> created on GitHub</label></li>
-<li><label><input type="checkbox">HTML committed and pushed</label></li>
-<li><label><input type="checkbox">GitHub Pages enabled (Deploy from a branch → main → /(root))</label></li>
-<li><label><input type="checkbox">Site accessible at <code>https://[your-username].github.io/simulationChallenge/</code></label></li>
-</ul>
-</section>
-<section id="tips" class="level2">
-<h2 class="anchored" data-anchor-id="tips">Tips</h2>
-<ul>
-<li>Set random seeds for reproducibility</li>
-<li>Use object-oriented plotting with <code>matplotlib</code></li>
-<li>Keep figures readable and labeled; prefer professional styling</li>
-<li>Commit early and often; render locally before pushing</li>
-</ul>
-</section>
+<section id="final-recommendation" class="level2">
+<h2 class="anchored" data-anchor-id="final-recommendation">Final Recommendation</h2>
+<p>Even though the game has a positive expected value, I wouldn’t recommend investing the full $30,000 under the original rules. The risk of ending up below the starting amount is just too high, and the outcomes are extremely volatile.</p>
+<p>If I had to participate, I would only do it using a fractional betting strategy like the 25% approach. It reduces the downside risk and aligns with the Kelly Criterion, which makes it feel like a more balanced and realistic strategy.</p>
+<p>Overall, this exercise showed me that a positive expected value doesn’t automatically mean a good investment—especially when compounding and risk are involved.</p>
 </section>
 
 </main>
@@ -339,13 +264,14 @@ Figure&nbsp;1: Generative DAG model for the investment game showing how wealth e
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

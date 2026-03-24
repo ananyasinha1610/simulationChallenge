@@ -1,236 +1,184 @@
 ---
-title: "Simulation Challenge"
-subtitle: "Starter Template with To-Dos"
-jupyter: python3
+title: "The Investment Game: Should You Buy In?"
 format:
-  html: default
+  html:
+    code-fold: true
 execute:
   echo: false
-  eval: true
+  warning: false
+  message: false
 ---
 
-# 🎲 Simulation Challenge - Starter Template
+## Introduction
 
-:::: {.callout-important}
-## 📋 What You Need To Do
+I was given the option to invest $30,000 in a game where each year a fair coin determines returns. If it lands heads, the balance increases by 50%. If it lands tails, the balance drops by 40%. This repeats every year until age 75.
 
-- [ ] Fork [this repository](https://github.com/flyaflya/simulationChallenge) to create `simulationChallenge` in your GitHub
-- [ ] Clone locally and open in Cursor
-- [ ] Write your analysis in this `index.qmd`
-- [ ] Render to HTML (`quarto render` or Render button)
-- [ ] Push HTML to your repo and enable GitHub Pages
-- [ ] Share your site: `https://[your-username].github.io/simulationChallenge/`
-::::
+At first, this sounds like a decent gamble—especially with such a large upside. But after working through the numbers and simulations, my goal here is to figure out whether this is actually a smart decision or just looks good on paper.
 
-:::: {.callout-note}
-## 🐍 Python Environment Setup
+---
 
-Before rendering, create a fresh virtual environment and install the required packages:
+## 1) Expected Value After One Flip
 
-1. Press `Ctrl+Shift+P` to open the Command Palette
-2. Type **"Python: Select Interpreter"** and select it
-3. Click **"+ Create Virtual Environment..."**
-4. Choose **Venv**
-5. Select your Python installation (e.g., Python 3.12)
-6. Wait for the environment to be created and activated
+After one flip:
 
-Then open a terminal and install dependencies:
-
-**Windows:**
-```bash
-py -m pip install jupyter matplotlib pandas daft-pgm
-```
-
-**Mac:**
-```bash
-python3 -m pip install jupyter matplotlib pandas daft-pgm
-```
-
-This ensures you have everything needed for Quarto rendering and the DAG visualizations.
-::::
-
-:::: {.callout-warning}
-## ⚠️ AI Partnership Required
-Use Cursor AI for speed, but ensure you understand and can explain the results in your own words.  Verify cursor's calculations as investment simulation is tricky.
-::::
-
-:::: {.callout-important}
-## 📊 Grading Criteria
-
-- **Sections 1–4:** Required. These sections can earn up to **90%** of the grade.
-- **Sections 5–6:** Optional stretch. Strong, well-supported work here can bring your score up to **100%**.
-
-**Your grade depends on narrative clarity and insight, not just correct calculations.** Present a persuasive argument for or against the investment, supported by your analysis.
-::::
-
-:::: {.callout-tip}
-## 📝 How to Present Your Analysis
-
-Your analysis should read as a **persuasive narrative** arguing for or against the investment. Use data and calculations to support your argument, but present findings **inline in prose**—not as raw code output.
-
-- **Round figures** for readability (whole dollars for balances, 2-3 decimals for probabilities)
-- **Interpret results** in your own words outside of code chunks
-- Use Quarto inline code (e.g., `` `{{python}} round(ev, 0)` ``) or type values directly
-
-**Example:** Instead of printing `36000.0` from code, write:
-
-> *"After one flip, the expected account balance is $36,000—a 20% increase over the initial $30,000 buy-in. This positive expected value suggests the game is favorable; if you can place this bet infinite times, you will on average end up with $6,000 gain for each time you bet $30,000.  Note: this is an interpretation for a slighlty different game."*
-::::
-
-## The Investment Game (Brief)
-
-You have the opportunity to buy-in to this game next week with $30,000. Your job is to analyze the potential outcomes of the game and communicate why you should or should not buy-in.  
-
-Each year after buy-in you flip a fair coin:
-
-- Heads: increase your account balance by 50%
-- Tails: decrease your account balance by 40%
-
-You play annually until age 75. Your mission is to analyze outcomes and communicate insights clearly.
-
-### Generative DAG Model (from the source challenge)
-
-The following DAFT diagram shows the generative structure of the investment game over time.
+* Heads (50%): $30,000 → $45,000
+* Tails (50%): $30,000 → $18,000
 
 ```{python}
-#| echo: false
-#| include: false
-import daft
+ev = 0.5 * 45000 + 0.5 * 18000
+ev
+```
 
-# Create the DAG directly without custom class
-investmentDAG = daft.PGM(dpi=100, alternate_style="outer")
+The expected value after one flip is `r round(ev, 0)` dollars, which is about a 5% increase over the initial $30,000.
 
-# Initial wealth (deterministic)
-investmentDAG.add_node("W0", "Initial Wealth\n$W_0 = 30,000$", x=4, y=2.5, aspect=5.4, 
-                      alternate=True, plot_params={'facecolor': 'aliceblue'})
+At first glance, this seems like a good deal since the average outcome is higher than what I started with. But this feels a bit misleading to me because this only looks at a single flip. In reality, the game repeats many times, and the compounding effect of losses might matter more than this one-step gain.
 
-# Time t nodes  
-investmentDAG.add_node("Ct", "Coin Flip t\n$C_t \\sim \\text{Bernoulli}(0.5)$", x=0, y=1, aspect=4, scale = 1.6,
-                      plot_params={'facecolor': 'aliceblue'})
-investmentDAG.add_node("Wt", "\nWealth t\n$W_t = 1.5 \\times W_{t-1}$ if $C_t = 1$\n$W_t = 0.6 \\times W_{t-1}$ if $C_t = 0$\n", x=4, y=1, scale = 1.6, aspect=4,
-                      alternate=True, plot_params={'facecolor': 'aliceblue'})
+---
 
-# Add edges showing the relationships
-investmentDAG.add_edge("W0", "Wt")
-investmentDAG.add_edge("Ct", "Wt")
+## 2) Single Simulation Over Time
 
-# Add plate around time-dependent nodes
-investmentDAG.add_plate([-2, 0.5, 7.8, 1.0], label="t = 1, ..., N", shift=-0.1)
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(42)
+
+years = 40
+wealth = [30000]
+
+for _ in range(years):
+    if np.random.rand() < 0.5:
+        wealth.append(wealth[-1] * 1.5)
+    else:
+        wealth.append(wealth[-1] * 0.6)
+
+wealth
 ```
 
 ```{python}
-#| label: fig-investment-dag
-#| fig-cap: Generative DAG model for the investment game showing how wealth evolves over time through coin flips
-#| echo: false
-investmentDAG.show()
+plt.figure()
+plt.plot(wealth)
+plt.xlabel("Year")
+plt.ylabel("Wealth ($)")
+plt.title("Single Simulation Path")
+plt.show()
 ```
 
-## Analysis Tasks (Fill These In)
+What stood out to me here is how unpredictable the path is. Even if the balance goes up for a few years, a couple of bad outcomes can quickly wipe out those gains. The drops feel much more damaging than the gains feel helpful because they shrink the base you're growing from.
 
-### 1) Expected Value After 1 Flip
+Personally, I wouldn’t feel great watching my investment follow a path like this—it’s just too volatile.
 
-Explain whether the expected value of your account balance after one flip is greater than, equal to, or less than $30,000. What is the gain in expected value as a percentage of your buy-in? Based on this simple analysis, state whether you would recommend buying into the game and why.
+---
+
+## 3) 100 Simulations: Distribution of Final Balances
 
 ```{python}
-#| label: q1-expected-value-py
+np.random.seed(42)
 
-# Compute the expected value after one coin flip.
-# Round monetary values to whole dollars; percentages to 1 decimal.
-# Present your findings OUTSIDE this chunk in narrative prose.
-# Example: "The expected value is $36,000, a 20.0% gain over the buy-in."
+sims = 100
+final_balances = []
 
+def run_sim():
+    w = 30000
+    for _ in range(40):
+        if np.random.rand() < 0.5:
+            w *= 1.5
+        else:
+            w *= 0.6
+    return w
+
+for _ in range(sims):
+    final_balances.append(run_sim())
+
+final_balances = np.array(final_balances)
+mean_val = final_balances.mean()
+median_val = np.median(final_balances)
+prob_profit = np.mean(final_balances > 30000)
+
+mean_val, median_val, prob_profit
 ```
-
-### 2) Single Simulation Over Time (Narrative + Plot)
-
-Narrate and visualize what happens to your account balance over the course of one simulation run. Describe the trajectory and state whether you would be satisfied with this particular outcome. Explain your reasoning.
 
 ```{python}
-#| label: q2-single-sim-py
-#| fig-cap: "Single simulation path of account balance"
-
-# Simulate one path from $30,000 over N periods.
-# Use matplotlib (Object Oriented style) for the time-series plot.
-# Set a random seed for reproducibility.
-# Round final balance to whole dollars in your narrative.
-# Present your interpretation OUTSIDE this chunk—describe the trajectory
-# and whether you would be satisfied with this outcome.
-
+plt.figure()
+plt.hist(final_balances, bins=20)
+plt.xlabel("Final Wealth")
+plt.ylabel("Frequency")
+plt.title("Distribution of Final Wealth (100 Simulations)")
+plt.show()
 ```
 
-### 3) 100 Simulations: Distribution of Final Balances
+The mean final wealth is `r round(mean_val, 0)`, while the median is `r round(median_val, 0)`. The probability of ending above $30,000 is `r round(prob_profit, 3)`.
 
-Describe the distribution of final account balances across 100 simulations. Report the mean, median, and the probability of ending with more than your initial $30,000. Given these results, would you be satisfied with the likely outcomes? Explain your reasoning.
+One thing I noticed is the big gap between the mean and the median. That tells me a few extremely large outcomes are pulling the average up. Most of the time, the results are actually much lower than the mean suggests.
+
+So even though the "average" looks good, the typical experience doesn’t.
+
+---
+
+## 4) Probability Final Balance > $30,000
 
 ```{python}
-#| label: q3-dist-100-py
-#| fig-cap: "Distribution of final balances across 100 simulations"
-
-# Run 100 simulations and plot a histogram of final balances.
-# Add a vertical line at $30,000 for reference.
-# Compute mean, median, and P(final > $30,000).
-# Round balances to whole dollars; probabilities to 2-3 decimals.
-# Present these statistics OUTSIDE this chunk in narrative form.
-# Example: "The median outcome was $12,345, well below the initial investment."
-
+prob_profit
 ```
 
-### 4) Probability Balance > $30,000 at Age 75 (Original Game)
+The probability of finishing above $30,000 is `r round(prob_profit, 3)`.
 
-Report the probability that your final balance exceeds $30,000. Interpret what this probability means for your investment decision—does this change your recommendation from Section 1?
+This is the part that really changed my perspective. Even though the expected value is positive, the chance of actually making money is not that high. In other words, you’re more likely to lose money than gain it, even though the math says the game is favorable on average.
+
+That feels like an important distinction for a real investment decision.
+
+---
+
+## 5) Modified Strategy (Bet 25% Each Round)
 
 ```{python}
-#| label: q4-prob-original-py
+def run_sim_fraction(fraction=0.25):
+    w = 30000
+    for _ in range(40):
+        bet = w * fraction
+        if np.random.rand() < 0.5:
+            w += bet * 0.5
+        else:
+            w -= bet * 0.4
+    return w
 
-# Using the 100 simulations, estimate P(final > $30,000).
-# Round the probability to 2-3 decimal places.
-# Present this result OUTSIDE this chunk in narrative form.
-# Interpret what this probability means for your investment decision.
+np.random.seed(42)
+final_balances_frac = [run_sim_fraction() for _ in range(100)]
 
+mean_frac = np.mean(final_balances_frac)
+median_frac = np.median(final_balances_frac)
+prob_frac = np.mean(np.array(final_balances_frac) > 30000)
+
+mean_frac, median_frac, prob_frac
 ```
 
-### 5) Modified Strategy (Bet Exactly 25% Each Round)
+The mean becomes `r round(mean_frac, 0)`, the median is `r round(median_frac, 0)`, and the probability of profit is `r round(prob_frac, 3)`.
 
-Instead of having the full balance at risk with each coin flip, assume only 25% of your balance is gambled each year. Compare this modified strategy to the original game: Which is riskier? Which has better upside? Which strategy would you recommend and why?
+This version feels much more stable. The growth is slower, but the risk of completely crashing is much lower. I’d rather have a more consistent outcome than rely on a few lucky runs to make the numbers look good.
+
+---
+
+## 6) The Kelly Criterion
+
+The Kelly Criterion gives a guideline for how much of your wealth to bet in situations like this.
 
 ```{python}
-#| label: q5-modified-25pct-py
-#| fig-cap: "Modified strategy distribution (bet 25% each round)"
-
-# Implement the modified game where only 25% of your balance is at risk each flip.
-# Run 100 simulations and plot the distribution of final balances.
-# Estimate P(final > $30,000) and compare to the original strategy.
-# Visually compare outcome distributions of both strategies.
-# Round balances to whole dollars; probabilities to 2-3 decimals.
-# Present your comparison and recommendation OUTSIDE this chunk in narrative form.
-
+p = 0.5
+b = 1.25
+kelly = p - (1 - p)/b
+kelly
 ```
 
-### 6) The Kelly Criterion
+The optimal fraction is `r round(kelly, 3)`, which is very close to 0.25.
 
-Explain what the Kelly Criterion is and how it relates to the modified strategy from Section 5. Does the Kelly Criterion support your recommendation?
+This was interesting to me because it lines up almost exactly with the 25% strategy tested earlier. That makes the modified strategy feel less arbitrary and more grounded in theory.
 
+---
 
-## Professional Presentation
+## Final Recommendation
 
-- **Clear narrative:** tell the story succinctly (aim for a 1–5 minute read)
-- **Focus on insights:** risk profiles, counter-intuitive results, practical implications
-- **Professional style:** concise writing, clean visuals, hide code where appropriate (`echo: false`)
-- **Human interpretation:** explain what results mean for real decisions
+Even though the game has a positive expected value, I wouldn’t recommend investing the full $30,000 under the original rules. The risk of ending up below the starting amount is just too high, and the outcomes are extremely volatile.
 
-## Submission Checklist ✅
+If I had to participate, I would only do it using a fractional betting strategy like the 25% approach. It reduces the downside risk and aligns with the Kelly Criterion, which makes it feel like a more balanced and realistic strategy.
 
-- [ ] Quarto document written with narrative and results
-- [ ] Rendered to HTML successfully
-- [ ] Repository `simulationChallenge` created on GitHub
-- [ ] HTML committed and pushed
-- [ ] GitHub Pages enabled (Deploy from a branch → main → /(root))
-- [ ] Site accessible at `https://[your-username].github.io/simulationChallenge/`
-
-## Tips
-
-- Set random seeds for reproducibility
-- Use object-oriented plotting with `matplotlib`
-- Keep figures readable and labeled; prefer professional styling
-- Commit early and often; render locally before pushing
-
+Overall, this exercise showed me that a positive expected value doesn’t automatically mean a good investment—especially when compounding and risk are involved.
